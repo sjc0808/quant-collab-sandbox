@@ -1,23 +1,7 @@
 """Unit tests for ``src.utcnow`` (SANDBOX-001)."""
 
 import re
-import sys
 from datetime import datetime, timezone
-from pathlib import Path
-
-# Deterministic import anchor: put the repository root on sys.path so that
-# ``from src.utcnow import utcnow`` resolves identically under ``pytest -q``
-# (console script, no cwd on sys.path) and ``python -m pytest``.
-# Rationale: with a top-level ``src/`` directory present, setuptools automatic
-# discovery always selects "src-layout" (see setuptools.discovery
-# ``_analyse_src_layout``: it returns True unconditionally once ``src/``
-# exists), so ``pip install -e .`` only exposes ``<repo>/src`` on sys.path
-# (i.e. a top-level ``utcnow`` module), never the ``src`` package itself.
-# Pinning the repo root here makes the import explicit and stable instead of
-# depending on the caller's working directory ("碰巧成功").
-_REPO_ROOT = Path(__file__).resolve().parents[1]
-if str(_REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(_REPO_ROOT))
 
 from src.utcnow import utcnow
 
